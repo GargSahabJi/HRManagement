@@ -17,8 +17,9 @@
 */
 package com.nagarro.hrmanagement.repository.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,12 +40,11 @@ public class UserRepositoryImpl implements UserRepository {
     public User validateUser(User user) {
         String userName = user.getUserName();
         String password = user.getPassword();
-        TypedQuery<User> query = entityManager.createQuery(
+        List<User> query = entityManager.createQuery(
                 "SELECT u FROM User u WHERE u.userName='" + userName + "' AND u.password='" + password + "'",
-                User.class);
-        User validateUser = query.getSingleResult();
-        if (validateUser != null) {
-            return validateUser;
+                User.class).getResultList();
+        if (!query.isEmpty()) {
+            return query.get(0);
         }
         return null;
     }

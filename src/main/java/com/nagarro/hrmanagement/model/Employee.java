@@ -1,3 +1,20 @@
+/*
+* Class name: Employee
+*
+* Version info: jdk 1.8
+*
+* Copyright notice:
+* 
+* Author info: Arpit Garg
+*
+* Creation date: 13/Apr/2021
+*
+* Last updated By: Arpit Garg
+*
+* Last updated Date: 16/Apr/2021
+*
+* Description: Model class for Employee Information
+*/
 package com.nagarro.hrmanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

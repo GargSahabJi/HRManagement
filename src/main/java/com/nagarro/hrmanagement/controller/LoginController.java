@@ -54,7 +54,7 @@ public class LoginController {
             request.getSession().setAttribute("userInfo", validUser);
             return "redirect:/employee";
         }
-        return "redirect:Login";
+        return "redirect:/login";
     }
 
     /**

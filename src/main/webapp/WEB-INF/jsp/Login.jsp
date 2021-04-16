@@ -31,10 +31,11 @@
 					User Name: </label>
 				<div class="col-md-9 col-sm-8">
 					<input type="text" autofocus class="form-control" id="userName"
-						placeholder="Enter user name" name="userName"
-						data-error="Enter your user name." required /> <small>
+						placeholder="Enter user name" name="userName" maxlength="50"
+						minlength="5" data-error="Enter your user name." required /> <small>
 						<div class="help-block with-errors"></div>
 					</small>
+					<p id="userNameError"></p>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -42,10 +43,11 @@
 					Password: </label>
 				<div class="col-md-9 col-sm-8">
 					<input type="password" autofocus class="form-control" id="password"
-						placeholder="Enter your password" name="password"
-						data-error="Enter your password." required /> <small>
+						placeholder="Enter your password" name="password" minlength="5"
+						maxlength="50" data-error="Enter your password." required /> <small>
 						<div class="help-block with-errors"></div>
 					</small>
+					<p id="userPasswordError"></p>
 				</div>
 			</div>
 			<label class="col-md-3 col-sm-3 col-form-label"></label>
@@ -74,6 +76,5 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-
 </body>
 </html>
