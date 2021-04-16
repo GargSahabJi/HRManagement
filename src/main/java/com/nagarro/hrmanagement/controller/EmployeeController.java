@@ -1,3 +1,20 @@
+/*
+* Class name: EmployeeController
+*
+* Version info: jdk 1.8
+*
+* Copyright notice:
+* 
+* Author info: Arpit Garg
+*
+* Creation date: 13/Apr/2021
+*
+* Last updated By: Arpit Garg
+*
+* Last updated Date: 16/Apr/2021
+*
+* Description: Controller class for Employee
+*/
 package com.nagarro.hrmanagement.controller;
 
 import com.nagarro.hrmanagement.model.Employee;
@@ -25,6 +42,11 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    /**
+     * @param model
+     * @param request
+     * @return List of Employees
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String getEmployeeListed(Model model, HttpServletRequest request) {
         String response;
@@ -42,31 +64,64 @@ public class EmployeeController {
         return response;
     }
 
+    /**
+     * Upload file and Save data in Database
+     * 
+     * @param file
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST)
-    public String uploadFile(@RequestParam("file") MultipartFile file, Model model) {
-        employeeService.addAllEmployees(file);
-        return "redirect:/employee";
+    public String uploadFile(@RequestParam("file") MultipartFile file, Model model, HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        if (httpSession != null && httpSession.getAttribute("userInfo") != null) {
+            employeeService.addAllEmployees(file);
+            return "redirect:/employee";
+        }
+        return "redirect:/login";
     }
 
+    /**
+     * Edit an employee
+     * 
+     * @param employee
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String editEmployee(@ModelAttribute("employee") Employee employee) {
-        System.out.println("hello....");
-        System.out.println(employee.getEmployeeCode());
-        System.out.println(employee.getEmployeeName());
-        System.out.println(employee.getEmail() + " " + employee.getLocation() + " " + employee.getDateOfBirth());
-        employeeService.editEmployee(employee);
-        return "redirect:/employee";
+    public String editEmployee(@ModelAttribute("employee") Employee employee, HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        if (httpSession != null && httpSession.getAttribute("userInfo") != null) {
+            System.out.println("hello....");
+            System.out.println(employee.getEmployeeCode());
+            System.out.println(employee.getEmployeeName());
+            System.out.println(employee.getEmail() + " " + employee.getLocation() + " " + employee.getDateOfBirth());
+            employeeService.editEmployee(employee);
+            return "redirect:/employee";
+        }
+        System.out.println("outt....");
+        return "redirect:/login";
     }
 
+    /**
+     * download the CSV file
+     * 
+     * @param response
+     * @param request
+     */
     @RequestMapping(value = "/download", method = RequestMethod.POST)
-    public void downloadFile(HttpServletResponse response) {
-        response.setContentType("text/csv");
-        response.addHeader("Content-Disposition", "attachment; filename=" + "EmployeeData.csv");
-        try (ICsvBeanWriter csvBeanWriter = new CsvBeanWriter(response.getWriter(),
-                CsvPreference.STANDARD_PREFERENCE)) {
-            employeeService.addEmployeeDetailsToFile(csvBeanWriter);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void downloadFile(HttpServletResponse response, HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        if (httpSession != null && httpSession.getAttribute("userInfo") != null) {
+            response.setContentType("text/csv");
+            response.addHeader("Content-Disposition", "attachment; filename=" + "EmployeeData.csv");
+            try (ICsvBeanWriter csvBeanWriter = new CsvBeanWriter(response.getWriter(),
+                    CsvPreference.STANDARD_PREFERENCE)) {
+                employeeService.addEmployeeDetailsToFile(csvBeanWriter);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

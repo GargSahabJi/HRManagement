@@ -1,3 +1,20 @@
+/*
+* Class name: CsvUtil
+*
+* Version info: jdk 1.8
+*
+* Copyright notice:
+* 
+* Author info: Arpit Garg
+*
+* Creation date: 13/Apr/2021
+*
+* Last updated By: Arpit Garg
+*
+* Last updated Date: 16/Apr/2021
+*
+* Description: CSV utility for read the data
+*/
 package com.nagarro.hrmanagement.utils;
 
 import java.io.BufferedReader;
@@ -11,8 +28,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nagarro.hrmanagement.model.Employee;
 
 public class CsvUtil {
+    
+    /**
+     * @param file
+     * @return list of employees
+     */
     public static List<Employee> getParsedData(MultipartFile file) {
-
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             String row = null;
             String[] data = null;

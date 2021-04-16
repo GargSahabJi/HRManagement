@@ -1,3 +1,20 @@
+/*
+* Class name: UserRepositoryImpl
+*
+* Version info: jdk 1.8
+*
+* Copyright notice:
+* 
+* Author info: Arpit Garg
+*
+* Creation date: 13/Apr/2021
+*
+* Last updated By: Arpit Garg
+*
+* Last updated Date: 16/Apr/2021
+*
+* Description: User Repository Implementation
+*/
 package com.nagarro.hrmanagement.repository.impl;
 
 import javax.persistence.EntityManager;
@@ -15,6 +32,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     private EntityManager entityManager;
 
+    /**
+     * Validate a user
+     */
     @Override
     public User validateUser(User user) {
         String userName = user.getUserName();

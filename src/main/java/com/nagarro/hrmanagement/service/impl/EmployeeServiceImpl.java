@@ -1,3 +1,20 @@
+/*
+* Class name: EmployeeServiceImpl
+*
+* Version info: jdk 1.8
+*
+* Copyright notice:
+* 
+* Author info: Arpit Garg
+*
+* Creation date: 13/Apr/2021
+*
+* Last updated By: Arpit Garg
+*
+* Last updated Date: 16/Apr/2021
+*
+* Description: Employee Service Implementation
+*/
 package com.nagarro.hrmanagement.service.impl;
 
 import java.io.IOException;
@@ -22,11 +39,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    /**
+     * @return list of employees
+     */
     @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.getAllEmployees();
     }
 
+    /**
+     * add employee to .csv file
+     */
     @Override
     public void addEmployeeDetailsToFile(ICsvBeanWriter csvBeanWriter) throws IOException {
         List<Employee> employees = this.getAllEmployees();
@@ -37,6 +60,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    /**
+     * add all employees to .csv file
+     */
     @Override
     public void addAllEmployees(MultipartFile file) {
         List<Employee> employees = CsvUtil.getParsedData(file);
@@ -47,6 +73,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    /**
+     * edit an employee
+     */
     @Override
     public void editEmployee(Employee employee) {
         employeeRepository.editEmployee(employee);
